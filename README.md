@@ -12,7 +12,8 @@ If you don't know the password, follow the steps to reset it:
 
 ```mysqld_safe --skip-grant-tables
 mysql -u root
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'NewRootPassword';FLUSH PRIVILEGES;```
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'NewRootPassword';FLUSH PRIVILEGES;
+```
 
 b. Update your script to use the correct root credentials:
 
@@ -20,7 +21,8 @@ b. Update your script to use the correct root credentials:
     host="localhost",
     user="root",
     password="NewRootPassword",
-)```
+    
+```
 
 2. Fix the edithbird5@gmail.com User Connection
 The error for edithbird5@gmail.com suggests either:
@@ -39,7 +41,8 @@ Check the user and plugin:
 If the plugin is caching_sha2_password, change it to mysql_native_password:
 
 ```ALTER USER 'edithbird5@gmail.com'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY 'ConfidenceClub!!';
-FLUSH PRIVILEGES;```
+FLUSH PRIVILEGES;
+```
 
 Ensure the user has the correct privileges:
 
@@ -49,11 +52,13 @@ FLUSH PRIVILEGES;
 
 3. Update the Script
 Ensure your script uses the correct credentials for edithbird5@gmail.com:
+
 ```conn = mysql.connector.connect(
     host="localhost",
     user="edithbird5@gmail.com",
     password="ConfidenceClub!!",
-)```
+)
+```
 
 4. Debugging Tips
 If the issue persists:
@@ -75,14 +80,18 @@ try:
         password="ConfidenceClub!!",
     )
     print("✅ Connected to MySQL!")
-except mysql.connector.Error as err:
-    print(f"❌ Failed to connect: {err}")```
+    except mysql.connector.Error as err:
+    print(f"❌ Failed to connect: {err}")
+    
+```
 
 5. Address the SQLAlchemy Warning
 The warning about declarative_base() is due to a deprecation in SQLAlchemy 2.0. Update your import to:
 
-```from sqlalchemy.orm import declarative_base
-Base = declarative_base()```
+```
+from sqlalchemy.orm import declarative_base
+Base = declarative_base()
+```
 
 6. Final Steps
 Ensure the MySQL server is running:

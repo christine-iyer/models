@@ -1,42 +1,28 @@
-from sqlalchemy import create_engine
-from student import Student
-from sqlalchemy.ext.declarative import declarative_base
 from dotenv import load_dotenv
 import os
+import mysql.connector
+import json
 
 # Load environment variables
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    raise ValueError("❌ DATABASE_URL is missing!")
-
-# Set up SQLAlchemy engine
-engine = create_engine(DATABASE_URL)
-Base = declarative_base()
-
-# Create all tables
-def create_tables():
-    Base.metadata.create_all(bind=engine)
-    print("✅ Database tables created successfully!")
-
-if __name__ == "__main__":
-    create_tables()
-
-    import mysql.connector
-import json
+# Get MySQL credentials from .env
+MYSQL_HOST = os.getenv("MYSQL_HOST")
+MYSQL_USER = os.getenv("MYSQL_USER")
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
+MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
 
 # 1. Connect to local MySQL server
 conn = mysql.connector.connect(
-    host="localhost",
-    user="edithbird5@gmail.com",          # Replace with your MySQL username
-    password="ConfidenceClub!!", # Replace with your MySQL password
+    host=MYSQL_HOST,
+    user=MYSQL_USER,
+    password=MYSQL_PASSWORD
 )
 cursor = conn.cursor()
 
 # 2. Create database (if not exists)
-cursor.execute("CREATE DATABASE IF NOT EXISTS school")
-cursor.execute("USE school")
+cursor.execute(f"CREATE DATABASE IF NOT EXISTS {MYSQL_DATABASE}")
+cursor.execute(f"USE {MYSQL_DATABASE}")
 
 # 3. Create table (if not exists)
 cursor.execute("""
@@ -66,9 +52,9 @@ class Student:
 if __name__ == "__main__":
     # Example student
     student1 = Student(
-        name="Laura",
-        reasons=["Edification", "Community"],
-        picture="/images/laura.jpg"
+        name="Chris",
+        reasons=["Improve written communication Skills", "Expand my vocabulary"],
+        picture="/images/chris.jpg"
     )
     student1.save_to_db()
 
