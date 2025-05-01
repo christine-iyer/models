@@ -52,8 +52,8 @@ class Student:
 if __name__ == "__main__":
     # Example student
     student1 = Student(
-        name="Mike",
-        reasons=["Improve concentration", "Read more books"],
+        name="Leah",
+        reasons=["Improve connections", "Read more books that are historical"],
         picture="/images/mike.jpg"
     )
     student1.save_to_db()
